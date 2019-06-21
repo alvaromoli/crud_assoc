@@ -12,7 +12,7 @@ class CompaniesController < ApplicationController
   def show
     @employee = Employee.new
     @areas = Area.all
-    @employees = Employee.joins(:area)
+    @employees = Employee.joins(:area).joins(:company).where(company_id: params[:id])
   end
 
   # GET /companies/new

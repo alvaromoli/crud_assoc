@@ -10,6 +10,12 @@ class EmployeesController < ApplicationController
     end
   end
 
+  def destroy
+    if Employee.destroy(params[:id])
+      redirect_to company_path(params[:company_id])
+    end
+  end
+
   private
 
   def employee_params
