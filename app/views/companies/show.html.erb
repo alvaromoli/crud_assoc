@@ -5,5 +5,53 @@
   <%= @company.name %>
 </p>
 
+<%= form_with(model: [ @company, @employee ]) do |form| %>
+  <%= form.hidden_field :company_id, value: @company.id %>
+  <div class="form-group">
+    <%= form.label :first_name %>
+    <%= form.text_field :first_name, class: "form-control" %>
+  </div>
+  <div class="form-group">
+    <%= form.label :last_name %>
+    <%= form.text_field :last_name, class: "form-control" %>
+  </div>
+  <div class="form-group">
+    <%= form.label :email %>
+    <%= form.email_field :email, class: "form-control" %>
+  </div>
+  <div class="form-group">
+    <%= form.select :area_id, options_from_collection_for_select(@areas, "id", "name"),
+                prompt: "Select area", class: "form-control" %>
+  </div>
+  <div class="form-group">
+    <%= form.submit "Crear", class: "btn btn-primary btn-sm" %>
+  </div>
+<% end %>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Firstname</th>
+      <th scope="col">Lastname</th>
+      <th scope="col">Email</th>
+      <th scope="col">Area</th>
+      <th>Handle</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @employees.each do |e| %>
+    <tr>
+      <td><%= e.first_name %></td>
+      <td><%= e.last_name %></td>
+      <td><%= e.email %></td>
+      <td><%= e.area.name %></td>
+      <td>
+        <%= link_to 'Destroy', company_employee_path(@company, e), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger btn-sm" %>
+      </td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
+
 <%= link_to 'Edit', edit_company_path(@company) %> |
 <%= link_to 'Back', companies_path %>
